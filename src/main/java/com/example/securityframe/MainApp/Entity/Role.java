@@ -1,4 +1,4 @@
-package com.example.securityframe.Entity;
+package com.example.securityframe.MainApp.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

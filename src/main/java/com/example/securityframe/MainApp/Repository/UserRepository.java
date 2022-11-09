@@ -1,6 +1,6 @@
-package com.example.securityframe.Repository;
+package com.example.securityframe.MainApp.Repository;
 
-import com.example.securityframe.Entity.UserEntity;
+import com.example.securityframe.MainApp.Entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
-package com.example.securityframe.Service;
+package com.example.securityframe.MainApp.Service;
 
 import com.example.securityframe.AuxiliaryClasses.StaticMethods;
-import com.example.securityframe.Entity.UserEntity;
-import com.example.securityframe.Repository.UserRepository;
+import com.example.securityframe.MainApp.Entity.UserEntity;
+import com.example.securityframe.MainApp.Repository.UserRepository;
 import com.example.securityframe.Security.SService.JWTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class UserService {
         String token = tokenWithPrefix.replace(TOKEN_PREFIX, "");
         String login = jwTokenService.getLoginFromJWT(token);
         if(login == null){
-            StaticMethods.createResponse(request, response, 400, "Incorrect JWToken");
+            StaticMethods.createResponse(400, "Incorrect JWToken");
             return null;
         }
 

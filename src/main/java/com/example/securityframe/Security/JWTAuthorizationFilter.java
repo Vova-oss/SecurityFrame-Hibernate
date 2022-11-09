@@ -54,7 +54,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     /**
      * Верификация токена с дальнейшим получением данных пользователя
-     * @code 468 - Token was expired
+     * @code 401 - Token was expired
      */
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, HttpServletResponse response){
         String header = request.getHeader(HEADER_JWT_STRING);
@@ -78,7 +78,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             }catch (JWTDecodeException e){
                 return null;
             }catch (TokenExpiredException e){
-                StaticMethods.createResponse(request, response, 468, "Token was expired");
+                StaticMethods.createResponse(401, "Token was expired");
                 return null;
             }
             return null;

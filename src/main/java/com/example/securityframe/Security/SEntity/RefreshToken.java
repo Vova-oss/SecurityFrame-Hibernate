@@ -1,6 +1,6 @@
 package com.example.securityframe.Security.SEntity;
 
-import com.example.securityframe.Entity.UserEntity;
+import com.example.securityframe.MainApp.Entity.UserEntity;
 import lombok.Data;
 
 import javax.persistence.*;

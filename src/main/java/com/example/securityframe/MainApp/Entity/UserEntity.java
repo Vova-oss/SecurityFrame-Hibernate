@@ -1,4 +1,4 @@
-package com.example.securityframe.Entity;
+package com.example.securityframe.MainApp.Entity;
 
 import com.example.securityframe.Security.SEntity.RefreshToken;
 import lombok.Data;

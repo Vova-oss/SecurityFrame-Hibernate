@@ -1,9 +1,15 @@
 package com.example.securityframe.AuxiliaryClasses;
 
+import com.example.securityframe.ReqResContextSettings.ReqResContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,16 +19,19 @@ import java.util.Map;
 
 public class StaticMethods {
 
-
     /**
      * Создание ответа
      * @param status - статус ответа
      * @param info - инфорация, которая будет прописана под полем "info"
      */
-    public static void createResponse(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      int status,
+    public static void createResponse(int status,
                                       String info){
+
+        ReqResContext context = ReqResContext.getCurrentInstance();
+        HttpServletRequest request = context.getRequest();
+        HttpServletResponse response = context.getResponse();
+
+
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(status);
 //        response.addHeader("Access-Control-Allow-Origin", "*" );
@@ -58,7 +67,7 @@ public class StaticMethods {
             JSONObject jsonObject = new JSONObject(body);
             field = jsonObject.getString(field);
         } catch (JSONException e) {
-            StaticMethods.createResponse(request, response, HttpServletResponse.SC_BAD_REQUEST, "Incorrect JSON");
+            StaticMethods.createResponse(HttpServletResponse.SC_BAD_REQUEST, "Incorrect JSON");
             return null;
         }
         return field;

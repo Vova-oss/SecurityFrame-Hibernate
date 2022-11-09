@@ -1,16 +1,15 @@
-package com.example.securityframe.Controller;
+package com.example.securityframe.MainApp.Controller;
 
-import com.example.securityframe.Entity.Role;
-import com.example.securityframe.Entity.UserEntity;
-import com.example.securityframe.Repository.RoleRepository;
-import com.example.securityframe.Repository.UserRepository;
+import com.example.securityframe.MainApp.Entity.Role;
+import com.example.securityframe.MainApp.Entity.UserEntity;
+import com.example.securityframe.MainApp.Repository.RoleRepository;
+import com.example.securityframe.MainApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController

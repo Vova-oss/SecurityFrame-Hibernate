@@ -1,10 +1,10 @@
 package com.example.securityframe.Security.SService;
 
 import com.example.securityframe.AuxiliaryClasses.StaticMethods;
-import com.example.securityframe.Entity.UserEntity;
+import com.example.securityframe.MainApp.Entity.UserEntity;
 import com.example.securityframe.Security.SEntity.RefreshToken;
-import com.example.securityframe.Repository.RefreshTokenRepository;
-import com.example.securityframe.Service.UserService;
+import com.example.securityframe.MainApp.Repository.RefreshTokenRepository;
+import com.example.securityframe.MainApp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,18 +73,17 @@ public class RefreshTokenService {
     /**
      * Обновление refresh-токена и jwt-токена (от клиента нужны они оба. В ответе в хедер запихнутся 2 новых)
      * @code 201 - Created
-     * @code 432 - Refresh token doesn't exist
-     * @code 433 - Refresh token was expired
+     * @code 401 - Refresh token doesn't exist
+     * @code 401 - Refresh token was expired
      * */
     public void refreshToken(HttpServletRequest request, HttpServletResponse response){
 
         String rToken = request.getHeader(HEADER_RT_STRING);
-        String jwToken = request.getHeader(HEADER_EXPIRED_JWT_STRING);
+        String jwToken = request.getHeader(HEADER_JWT_STRING);
         if(rToken!=null && jwToken!=null){
             RefreshToken refreshToken = findByToken(rToken).orElse(null);
             if(refreshToken == null){
-                StaticMethods.createResponse(request, response,
-                        432,"Refresh token doesn't exist");
+                StaticMethods.createResponse(401,"Refresh token doesn't exist");
                 String login = jwTokenService.decodeJWT(jwToken);
                 UserEntity userEntity = userService.findByLogin(login);
                 if(userEntity!=null){
@@ -94,8 +93,7 @@ public class RefreshTokenService {
             }
             refreshToken = verifyExpiration(refreshToken);
             if(refreshToken == null){
-                StaticMethods.createResponse(request, response,
-                        433,"Refresh token was expired");
+                StaticMethods.createResponse(401,"Refresh token was expired");
                 return;
             }
 
@@ -108,8 +106,7 @@ public class RefreshTokenService {
             //Устанавливаем, какие хедеры может видеть фронт
             response.addHeader("Access-Control-Expose-Headers", HEADER_JWT_STRING+","+HEADER_RT_STRING);
 
-            StaticMethods.createResponse(request, response,
-                    HttpServletResponse.SC_CREATED, "Created");
+            StaticMethods.createResponse(HttpServletResponse.SC_CREATED, "Created");
 
         }
 
